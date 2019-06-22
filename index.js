@@ -68,40 +68,40 @@ function createRock(x) {
   var top = 0
 
   rock.style.top = top
-  function step(){
-if(top<400){
-  window.requestAnimationFrame(x)
-}}
-window.requestAnimationFrame(x)
+  
+
   /**
    * Now that we have a rock, we'll need to append
    * it to GAME and move it downwards.
    */
-$('rock').on('load',function(){
-  $('div').append('rock')
-})
+  GAME.appendChild(rock)
+
   /**
    * This function moves the rock. (2 pixels at a time
    * seems like a good pace.)
    */
   function moveRock() {
-    if(checkCollision===false){
-     window.requestAnimationFrame(x) 
-    }else if(checkCollision===true){
-      return endGame
-    }
+  rock.style.top = `${top += 2}px`
     // implement me!
     // (use the comments below to guide you!)
     /**
      * If a rock collides with the DODGER,
      * we should call endGame()
-     */
-
-    /**
+     */ if(checkCollision(rock)===true){
+      return endGame()
+    }
+   /**
      * Otherwise, if the rock hasn't reached the bottom of
      * the GAME, we want to move it again.
-     */
+     */ if(top<GAME_HEIGHT){
+  window.requestAnimationFrame(moveRock)
+  }else{
+    rock.remove()
+  }
+}
+   window.requestAnimationFrame(moveRock)
 
+   
     /**
      * But if the rock *has* reached the bottom of the GAME,
      * we should remove the rock from the DOM
@@ -109,7 +109,7 @@ $('rock').on('load',function(){
   }
 
   // We should kick of the animation of the rock around here
-
+//moveRock(x)
   // Add the rock to ROCKS so that we can remove all rocks
   // when there's a collision
   ROCKS.push(rock)
